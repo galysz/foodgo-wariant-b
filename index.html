@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>FoodGo — obiad na dwunastą</title>
+<meta name="description" content="FoodGo Catering Wrocław: obiady domowe gotowane każdego ranka, zestaw za 27 zł z dowozem od 12:00.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root {
+  --bg: #f4f5f7;
+  --paper: #e8eaef;
+  --surface: #dcdfe6;
+  --ink: #1c3d9e;
+  --muted: #3b57ad;
+  --accent: #1c3d9e;
+  --accent-ink: #f2ede1;
+  --font-display: "Rokkitt", Georgia, serif;
+  --font-text: "Literata", Georgia, serif;
+  --step-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --step-sub: clamp(1.75rem, 1.2rem + 1.2vw, 2.25rem);
+  --step-head: clamp(2.25rem, 1.4rem + 3vw, 4.25rem);
+  --step-display: clamp(3rem, 1.5rem + 5vw, 6rem);
+  --radius: 20px;
+  --gap: 12px;
+}
+body { background: var(--bg); color: var(--ink); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; }
+.button { border-radius: 999px; font-weight: 600; min-height: 3.25rem; padding: 0 1.75rem; }
+.button:hover { background: #142e7a; filter: none; }
+.button.light { background: var(--paper); color: var(--ink); }
+.button.light:hover { background: #fff; }
+.u { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; transition: text-decoration-thickness var(--t-hover); }
+.u:hover { text-decoration-thickness: 3px; }
+
+/* ---------- the split stage ---------- */
+.stage { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); padding: var(--gap); align-items: start; }
+.photo { position: sticky; top: var(--gap); height: calc(100svh - 2 * var(--gap)); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1600ms ease; }
+.photo img.on { opacity: 1; }
+.photo .hours { position: absolute; left: 0; right: 0; bottom: 0; min-height: 56px; padding: 0.6rem 1.25rem; background: var(--paper); display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: var(--step-small); }
+.column { display: grid; gap: var(--gap); }
+
+.sheet { background: var(--paper); border-radius: var(--radius); min-height: calc(100svh - 2 * var(--gap)); padding: 1.5rem clamp(1.25rem, 3vw, 3rem) 3rem; text-align: center; display: grid; grid-template-rows: auto 1fr; }
+.sheet nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; font-size: var(--step-body); }
+.sheet nav a:first-child { justify-self: start; }
+.sheet nav a:last-child { justify-self: end; }
+.wordmark { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: var(--step-sub); line-height: 1; text-decoration: none; letter-spacing: -0.01em; }
+.sheet .copy { align-self: center; padding-top: 6vh; }
+.sheet h1 { font-size: var(--step-display); margin: 0 auto; }
+.sheet .lede { margin: 1.5rem auto 0; max-width: 40ch; font-size: var(--step-body); line-height: 1.6; }
+.clock { margin: 2.25rem auto 0; display: inline-grid; gap: 0.25rem; }
+.clock .big { font-family: var(--font-display); font-weight: 800; font-size: var(--step-head); line-height: 1; font-variant-numeric: tabular-nums; }
+.clock .note { font-size: var(--step-small); color: var(--muted); }
+.actions { margin-top: 2rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem 1.75rem; }
+
+.field { background: var(--ink); color: var(--paper); border-radius: var(--radius); padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 3vw, 3rem); display: grid; gap: clamp(5rem, 10vw, 8rem); }
+/* printed menu sheet with scalloped edges */
+.menu-card { background: var(--paper); color: var(--ink); max-width: 640px; width: 100%; margin: 0 auto; padding: 64px clamp(1.5rem, 5vw, 64px); text-align: center;
+  -webkit-mask: radial-gradient(circle 9px at 50% 0, #0000 97%, #000) 0 0 / 24px 51% repeat-x, radial-gradient(circle 9px at 50% 100%, #0000 97%, #000) 0 100% / 24px 51% repeat-x; /* taste-skill-ignore: mask cuts the scalloped paper edge */
+          mask: radial-gradient(circle 9px at 50% 0, #0000 97%, #000) 0 0 / 24px 51% repeat-x, radial-gradient(circle 9px at 50% 100%, #0000 97%, #000) 0 100% / 24px 51% repeat-x; /* taste-skill-ignore: mask cuts the scalloped paper edge */ }
+.menu-card h2 { font-size: var(--step-head); }
+.menu-card .note { margin: 0.75rem auto 0; font-size: var(--step-small); color: var(--muted); }
+.group { margin-top: 56px; }
+.group h3 { font-family: var(--font-text); text-transform: none; font-weight: 600; font-size: var(--step-lead); letter-spacing: 0; line-height: 1.2; }
+.items { margin: 1.25rem auto 0; max-width: 420px; display: grid; gap: 16px; text-align: left; }
+.item { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--step-body); font-variant-numeric: tabular-nums; }
+.item small { display: block; font-size: var(--step-small); color: var(--muted); }
+.item span:last-child { white-space: nowrap; }
+.menu-card .close { margin-top: 56px; font-size: var(--step-small); }
+.menu-card .close p { max-width: none; }
+
+/* itinerary slip */
+.how { display: grid; gap: 2rem; }
+.how h2 { font-size: var(--step-head); max-width: 12ch; }
+.how > div > p { margin-top: 1rem; max-width: 30ch; font-size: var(--step-body); }
+.slip { background: var(--paper); color: var(--ink); max-width: 480px; width: 100%; justify-self: end; padding: 2.25rem 1.75rem 3.5rem; font-variant-numeric: tabular-nums; font-size: var(--step-small);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), 95% 100%, 90% calc(100% - 14px), 85% 100%, 80% calc(100% - 14px), 75% 100%, 70% calc(100% - 14px), 65% 100%, 60% calc(100% - 14px), 55% 100%, 50% calc(100% - 14px), 45% 100%, 40% calc(100% - 14px), 35% 100%, 30% calc(100% - 14px), 25% 100%, 20% calc(100% - 14px), 15% 100%, 10% calc(100% - 14px), 5% 100%, 0 calc(100% - 14px)); }
+.slip h3 { font-family: var(--font-text); text-transform: none; font-weight: 600; font-size: var(--step-small); letter-spacing: 0; line-height: 1.4; margin-top: 28px; }
+.slip h3:first-child { margin-top: 0; }
+.leg { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.6rem; }
+.leg .dots { flex: 1; height: 4px; align-self: center; background: radial-gradient(circle 2px, var(--ink) 98%, #0000) 0 50% / 9px 4px repeat-x; /* taste-skill-ignore: dot leader drawn as round dots */ }
+.slip .total { margin: 28px -1.75rem 0; min-height: 44px; padding: 0 1.75rem; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+
+@media (max-width: 55.99em) {
+  .stage { display: flex; flex-direction: column; padding: var(--gap); gap: 0; }
+  .photo { order: -1; width: 100%; }
+  .photo { position: sticky; top: var(--gap); height: 56svh; z-index: 0; }
+  .column { position: relative; z-index: 1; margin-top: -10svh; }
+  .sheet { min-height: 0; padding-bottom: 2.5rem; }
+  .sheet nav { font-size: var(--step-small); }
+  .sheet h1 { font-size: 9vw; }
+  .sheet .copy { padding-top: 2.5rem; }
+  .actions .button { width: 100%; }
+  .menu-card { padding: 40px 28px; }
+  .slip { justify-self: stretch; }
+}
+
+/* ---------- for whom: pinned heading, passing rows ---------- */
+.whom { padding: var(--section) var(--margin); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+.whom h2 { grid-column: 1 / 6; align-self: start; position: sticky; top: 32px; font-size: var(--step-display); }
+.blocks { grid-column: 7 / 13; display: grid; gap: 96px; }
+.block h3 { font-family: var(--font-text); text-transform: none; letter-spacing: 0; font-weight: 600; font-size: var(--step-lead); line-height: 1.2; }
+.block .pair { margin-top: 1.25rem; display: flex; gap: 2rem; align-items: start; }
+.block:nth-child(even) .pair { flex-direction: row-reverse; justify-content: flex-end; }
+.block img { width: clamp(180px, 16vw, 220px); aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radius); flex: none; }
+.block ul { display: grid; gap: 14px; font-size: var(--step-body); padding: 0; list-style: none; }
+@media (max-width: 55.99em) {
+  .whom { display: block; }
+  .whom h2 { font-size: 9vw; top: 0; background: var(--bg); padding: 12px 0; z-index: 2; }
+  .blocks { gap: 72px; margin-top: 2rem; }
+  .block .pair, .block:nth-child(even) .pair { flex-direction: column; }
+  .block img { width: 100%; aspect-ratio: 4 / 3; }
+}
+
+/* ---------- faq: questions beside a tall photograph ---------- */
+.faq { margin: 0 var(--gap); background: var(--ink); color: var(--paper); border-radius: var(--radius); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); padding: 0 clamp(1.25rem, 4vw, 4rem); overflow: hidden; }
+.faq .left { grid-column: 1 / 6; padding: clamp(3rem, 6vw, 6rem) 0; }
+.faq h2 { font-size: var(--step-head); }
+.facts { margin-top: 1.5rem; display: grid; gap: 0.4rem; font-size: var(--step-lead); line-height: 1.35; }
+.facts a { text-decoration: none; }
+.facts a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.qa { margin-top: 2.5rem; display: grid; gap: 28px; }
+.qa summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: var(--step-lead); line-height: 1.3; min-height: 44px; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: ""; flex: none; width: 10px; height: 10px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-3px); transition: transform var(--t-ui) var(--ease-out); }
+.qa details[open] summary::after { transform: rotate(-135deg); }
+.qa p { margin-top: 0.75rem; font-size: var(--step-body); color: #dfe5f6; }
+.faq .actions { justify-content: start; margin-top: 2.5rem; }
+.faq .actions a.u { color: var(--paper); }
+.faq .pics { grid-column: 7 / 13; position: relative; margin-bottom: 80px; }
+.faq .tall { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 0 0 var(--radius) var(--radius); }
+.faq .square { position: absolute; width: 34%; aspect-ratio: 1; object-fit: cover; left: -40px; bottom: -40px; border-radius: var(--radius); background: #fff; }
+@media (max-width: 55.99em) {
+  .faq { display: flex; flex-direction: column-reverse; }
+  .faq .pics { margin: 0 calc(-1 * clamp(1.25rem, 4vw, 4rem)); }
+  .faq .tall { aspect-ratio: 4 / 5; border-radius: 0; }
+  .faq .square { width: 38%; left: auto; right: 16px; bottom: -24px; }
+  .faq .left { padding-top: 3.5rem; }
+  .qa { gap: 24px; }
+  .faq .actions .button { width: 100%; }
+}
+
+/* ---------- contact: sentence, portrait, two links ---------- */
+.contact { padding: 160px var(--margin) 120px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
+.contact .say { grid-column: 1 / 7; font-size: var(--step-sub); line-height: 1.15; max-width: 28ch; }
+.contact .por { grid-column: 8 / 10; width: 160px; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); }
+.contact .how-to { grid-column: 10 / 13; display: grid; gap: 0.6rem; font-size: var(--step-body); }
+.contact .how-to b { font-weight: 600; margin-bottom: 0.6rem; }
+.contact .how-to small { margin-top: 0.6rem; font-size: var(--step-small); color: var(--muted); }
+@media (max-width: 55.99em) {
+  .contact { padding: 96px var(--margin); display: grid; grid-template-columns: 96px 1fr; gap: 1.5rem 1rem; }
+  .contact .say { grid-column: 1 / -1; font-size: var(--step-lead); }
+  .contact .por { grid-column: 1; width: 96px; }
+  .contact .how-to { grid-column: 2; }
+}
+
+/* ---------- footer: photograph half, menu half ---------- */
+.foot { display: grid; grid-template-columns: 1fr 1fr; min-height: 100svh; }
+.foot > img { width: 100%; height: 100%; object-fit: cover; }
+.foot .menu-half { background: var(--ink); color: var(--paper); padding: 80px clamp(1.25rem, 4vw, 4rem) 1.5rem; display: grid; grid-template-rows: auto auto auto 1fr auto; }
+.foot .mark { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: var(--step-lead); }
+.foot nav ul { margin-top: 2rem; display: grid; gap: 28px; padding: 0; list-style: none; }
+.foot nav a { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: var(--step-head); line-height: 1; text-decoration: none; display: inline-block; transition: transform var(--t-ui) var(--ease-out), color var(--t-hover); }
+@media (hover: hover) { .foot nav ul:hover a { color: #8fa3dc; } .foot nav ul a:hover { color: var(--paper); transform: translateX(12px); } }
+.foot .two { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; font-size: var(--step-small); }
+.foot .two a { text-decoration: none; }
+.foot .two a:hover { text-decoration: underline; }
+.foot .legal { align-self: end; margin-top: 3rem; font-size: var(--step-small); color: #c9d2ef; }
+.foot .legal p { max-width: 70ch; }
+.foot .legal a { color: inherit; }
+@media (max-width: 55.99em) {
+  .foot { grid-template-columns: 1fr; }
+  .foot > img { height: 50svh; }
+  .foot nav a { font-size: 8vw; }
+  .foot nav ul { gap: 20px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .photo img.on { animation: drift 9s var(--ease-soft) both; }
+  @keyframes drift { from { transform: scale(1.06); } to { transform: scale(1); } }
+}
+</style>
+</head>
+<body>
+
+<div class="stage" id="top">
+  <div class="column">
+    <header class="sheet">
+      <nav aria-label="Główna">
+        <a class="u" href="#menu">Menu</a>
+        <a class="wordmark" href="#top">FoodGo</a>
+        <a class="u" href="#kontakt">Kontakt</a>
+      </nav>
+      <div class="copy">
+        <h1 data-rise style="--i:0">Obiad na dwunastą</h1>
+        <p class="lede" data-rise style="--i:1">Codziennie inne menu, gotowane tego samego ranka. Zupa, drugie danie i surówka za 27 zł, z dowozem po całym Wrocławiu.</p>
+        <p class="clock" data-rise style="--i:2" aria-live="polite">
+          <span class="big" id="clock-big">od 12:00</span>
+          <span class="note" id="clock-note">Obiady wydajemy od poniedziałku do piątku.</span>
+        </p>
+        <div class="actions" data-rise style="--i:3">
+          <a class="button" href="tel:+48713425454">Zamów: 71 342 54 54</a>
+          <a class="u" href="#menu">Menu na dziś</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="field" aria-label="Menu i zamawianie">
+      <article class="menu-card" id="menu" data-reveal>
+        <h2>Menu na środę</h2>
+        <p class="note">21 października · zestaw obiadowy 27 zł</p>
+        <div class="group">
+          <h3>Zupa</h3>
+          <div class="items">
+            <div class="item"><span>Krupnik<small>na kaszy jęczmiennej</small></span><span>w zestawie</span></div>
+          </div>
+        </div>
+        <div class="group">
+          <h3>Danie główne, do wyboru</h3>
+          <div class="items">
+            <div class="item"><span>Udko pieczone</span><span>27 zł</span></div>
+            <div class="item"><span>Schab w sosie tymiankowym</span><span>27 zł</span></div>
+            <div class="item"><span>Kotleciki wieprzowe w sosie węgierskim</span><span>27 zł</span></div>
+            <div class="item"><span>Bigos z ziemniakami</span><span>27 zł</span></div>
+          </div>
+        </div>
+        <div class="group">
+          <h3>Surówka</h3>
+          <div class="items">
+            <div class="item"><span>Marchewka z porem</span><span>w zestawie</span></div>
+          </div>
+        </div>
+        <div class="close">
+          <p>Poniedziałek–piątek, 8:00–16:00</p>
+          <p>Obiady od 12:00</p>
+        </div>
+      </article>
+
+      <div class="how" id="jak">
+        <div data-reveal>
+          <h2>Jak to jedzie</h2>
+          <p>Od garnka do Twojego biurka w jeden poranek.</p>
+        </div>
+        <div class="slip" data-reveal style="--i:1">
+          <h3>Rano</h3>
+          <div class="leg"><span>Gotujemy na bieżąco</span><span class="dots"></span><span>od świtu</span></div>
+          <div class="leg"><span>Telefony i mail czynne</span><span class="dots"></span><span>8:00</span></div>
+          <h3>Przed południem</h3>
+          <div class="leg"><span>Zamawiasz zestawy</span><span class="dots"></span><span>71 342 54 54</span></div>
+          <div class="leg"><span>Pakujemy na ciepło</span><span class="dots"></span><span>przed 12:00</span></div>
+          <h3>W południe</h3>
+          <div class="leg"><span>Dowóz po Wrocławiu</span><span class="dots"></span><span>od 12:00</span></div>
+          <div class="leg"><span>Odbiór na Łódzkiej 14/1A</span><span class="dots"></span><span>od 12:00</span></div>
+          <div class="total"><span>Obiad na biurku</span><span>27 zł</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <figure class="photo" aria-label="Zdjęcia poglądowe potraw">
+    <img class="on" src="assets/chicken-leg-quarter-20260412-145303.jpg" width="1400" height="788" alt="Pieczone udko ze złotymi ziemniakami na niebieskim talerzu">
+    <img src="assets/krupnik-2023-10-15.jpg" width="1400" height="1350" alt="Talerz krupniku z marchewką i natką" loading="lazy">
+    <img src="assets/malbork-restauracja-piwniczka-06.jpg" width="1400" height="1400" alt="Kotlet z frytkami i surówką" loading="lazy">
+    <img src="assets/pork-potatoes-and-polish-cucumber-salad-mizeria.jpg" width="1400" height="796" alt="Mięso z młodymi ziemniakami i mizerią" loading="lazy">
+    <figcaption class="hours"><span>pon.–pt. 8:00–16:00 · obiady od 12:00</span><span>ul. Łódzka 14/1A, Wrocław</span></figcaption>
+  </figure>
+</div>
+
+<main>
+<section class="whom" id="firmy" aria-labelledby="whom-h">
+  <h2 id="whom-h">Gotujemy dla</h2>
+  <div class="blocks">
+    <article class="block" data-reveal>
+      <h3>Biur</h3>
+      <div class="pair">
+        <img src="assets/pork-potatoes-and-polish-cucumber-salad-mizeria.jpg" width="1400" height="796" alt="Obiad z ziemniakami i mizerią" loading="lazy">
+        <ul><li>Codziennie albo w wybrane dni</li><li>Każdy wybiera swoje danie</li><li>Jedna dostawa dla całego zespołu</li><li>Zupa, drugie danie i surówka</li><li>27 zł za zestaw</li></ul>
+      </div>
+    </article>
+    <article class="block" data-reveal>
+      <h3>Magazynów i zakładów</h3>
+      <div class="pair">
+        <img src="assets/go-abki-2023-07-25.jpg" width="1400" height="1371" alt="Gołąbki w sosie na talerzu" loading="lazy">
+        <ul><li>Ciepły obiad na przerwę w zmianie</li><li>Dowóz pod wskazany adres</li><li>Sycące, domowe porcje</li><li>Cały Wrocław</li></ul>
+      </div>
+    </article>
+    <article class="block" data-reveal>
+      <h3>Szkoleń i spotkań</h3>
+      <div class="pair">
+        <img src="assets/zurek-sour-rye-soup-warsaw.jpg" width="1400" height="972" alt="Żurek w kamionkowym kubku z kiełbasą i chlebem" loading="lazy">
+        <ul><li>Jednorazowe zamówienie</li><li>Lunch na szkolenie lub zebranie</li><li>Podajesz liczbę osób i termin</li><li>Dowozimy na miejsce</li></ul>
+      </div>
+    </article>
+    <article class="block" id="imprezy" data-reveal>
+      <h3>Imprez i okazji</h3>
+      <div class="pair">
+        <img src="assets/pierogi-gniezno-polonia3.jpg" width="1400" height="932" alt="Ręcznie lepione pierogi na stolnicy" loading="lazy">
+        <ul><li>Urodziny i rocznice</li><li>Spotkania rodzinne</li><li>Eventy firmowe</li><li>Od przekąsek po pełne obiady</li><li>Zadzwoń: 502 638 209</li></ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="faq" id="faq" aria-labelledby="faq-h">
+  <div class="left">
+    <h2 id="faq-h" data-reveal>Zanim zadzwonisz</h2>
+    <div class="facts" data-reveal style="--i:1">
+      <a href="https://maps.google.com/?q=%C5%81%C3%B3dzka+14%2F1A+Wroc%C5%82aw">ul. Łódzka 14/1A, 50-521 Wrocław</a>
+      <span>pon.–pt. 8:00–16:00, obiady od 12:00</span>
+      <span><a href="tel:+48713425454">71 342 54 54</a> · <a href="tel:+48502638209">502 638 209</a></span>
+    </div>
+    <div class="qa" data-reveal style="--i:2">
+      <details><summary>Ile kosztuje obiad?</summary><p>Zestaw obiadowy kosztuje 27 zł za porcję: zupa dnia, danie główne do wyboru i surówka.</p></details>
+      <details><summary>Gdzie dowozicie?</summary><p>Pod wskazany adres we Wrocławiu: do biur, magazynów i zakładów pracy.</p></details>
+      <details><summary>Czy menu się zmienia?</summary><p>Codziennie. Gotujemy na bieżąco, więc każdego dnia jest inna zupa i inne dania główne.</p></details>
+      <details><summary>Mogę odebrać obiad sam?</summary><p>Tak. Zapraszamy na ul. Łódzką 14/1A, od poniedziałku do piątku od 12:00.</p></details>
+      <details><summary>Zamawiacie stale dla firm?</summary><p>Tak. Możesz zamawiać codziennie dla całego zespołu albo jednorazowo, na szkolenie czy spotkanie.</p></details>
+      <details><summary>Robicie catering na imprezy?</summary><p>Tak: urodziny, rocznice, spotkania rodzinne i eventy firmowe. Podaj liczbę osób i termin, przygotujemy propozycję.</p></details>
+    </div>
+    <div class="actions" data-reveal style="--i:3">
+      <a class="button light" href="tel:+48713425454">Zadzwoń</a>
+      <a class="u" href="mailto:catering@foodgo.pl">catering@foodgo.pl</a>
+    </div>
+  </div>
+  <div class="pics" data-reveal style="--i:1">
+    <img class="tall" src="assets/picsum-292.jpg" width="1600" height="1000" alt="Świeże warzywa, czerwona cebula i pieprz na desce" loading="lazy">
+    <img class="square" src="assets/2023-ceramika-boles-awiecka-3.jpg" width="1400" height="964" alt="Filiżanka z ceramiki bolesławieckiej w kobaltowe groszki" loading="lazy">
+  </div>
+</section>
+
+<section class="contact" id="kontakt" aria-label="Kontakt">
+  <p class="say" data-reveal>Obiad dla siebie, zespołu albo na rodzinną imprezę? Napisz lub zadzwoń, ugotujemy.</p>
+  <img class="por" data-reveal style="--i:1" src="assets/krupnik-2023-10-15.jpg" width="1400" height="1350" alt="Talerz krupniku z natką" loading="lazy">
+  <div class="how-to" data-reveal style="--i:2">
+    <b>Jak zamówić?</b>
+    <a class="u" href="mailto:catering@foodgo.pl?subject=Zam%C3%B3wienie%20obiadu">catering@foodgo.pl</a>
+    <a class="u" href="tel:+48713425454">71 342 54 54</a>
+    <small>Wrocław, ul. Łódzka 14/1A · pon.–pt. 8:00–16:00</small>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <img src="assets/bigos-march-2023-1.jpg" width="1400" height="1050" alt="Bigos z bliska" loading="lazy">
+  <div class="menu-half">
+    <span class="mark">FoodGo</span>
+    <nav aria-label="Stopka"><ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#jak">Jak zamówić</a></li>
+      <li><a href="#firmy">Dla firm</a></li>
+      <li><a href="#imprezy">Na imprezy</a></li>
+      <li><a href="#faq">Pytania</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul></nav>
+    <div class="two">
+      <div><a href="mailto:catering@foodgo.pl">catering@foodgo.pl</a><br><a href="tel:+48713425454">71 342 54 54</a><br><a href="tel:+48502638209">502 638 209</a></div>
+      <div><a href="https://www.facebook.com/">Facebook</a><br><a href="https://www.google.com/maps/search/FoodGo+Catering+Wroc%C5%82aw">Oceń nas w Google</a></div>
+    </div>
+    <span></span>
+    <div class="legal">
+      <p>Projekt koncepcyjny strony, nie jest oficjalną stroną FoodGo. Dane kontaktowe pochodzą z foodgo.pl.</p>
+      <p>© 2026 FoodGo · Nakan Szymon Kozarowicz · NIP 8992603555</p>
+      <p>Zdjęcia poglądowe via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Krupnik_soup_Poland.jpg">krupnik</a> i <a href="https://commons.wikimedia.org/wiki/File:Pork,_potatoes_and_polish_cucumber_salad_Mizeria.jpg">obiad z mizerią</a> MOs810, CC BY-SA; <a href="https://commons.wikimedia.org/wiki/File:Chicken_leg_quarter_20260412_145303.jpg">udko</a> Vauia Rex, CC0; <a href="https://commons.wikimedia.org/wiki/File:Bigos,_March_2023_(1).jpg">bigos</a> MichalPL, CC BY-SA 4.0; <a href="https://commons.wikimedia.org/wiki/File:Malbork_restauracja_Piwniczka_06.jpg">kotlet</a> Аимаина хикари, CC0; <a href="https://commons.wikimedia.org/wiki/File:Go%C5%82%C4%85bki_-_(2023.07.25.).jpg">gołąbki</a> i <a href="https://commons.wikimedia.org/wiki/File:Krupnik_-_2023.10.15.jpg">krupnik</a> Aw58, CC BY-SA 4.0; <a href="https://commons.wikimedia.org/wiki/File:Zurek_Sour_Rye_Soup,_Warsaw.jpg">żurek</a> Ken Eckert, CC BY-SA 4.0; <a href="https://commons.wikimedia.org/wiki/File:Pierogi,_Gniezno,_Polonia3.jpg">pierogi</a> Diego Delso, CC BY-SA 3.0; warzywa: Webvilla, licencja Unsplash; <a href="https://commons.wikimedia.org/wiki/File:2023_Ceramika_boles%C5%82awiecka_(3).jpg">ceramika bolesławiecka</a> Jacek Halicki, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="shared/base.js"></script>
+<script>
+(() => {
+  // Lunch clock: time until 12:00 in Wrocław, or what happens next.
+  const big = document.getElementById('clock-big');
+  const note = document.getElementById('clock-note');
+  const tick = () => {
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Warsaw', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+    const mins = Number(p.hour) * 60 + Number(p.minute);
+    const weekday = !['Sat', 'Sun'].includes(p.weekday);
+    if (weekday && mins < 720) {
+      const left = 720 - mins;
+      big.textContent = (left >= 60 ? Math.floor(left / 60) + ' h ' : '') + (left % 60) + ' min';
+      note.textContent = 'tyle zostało do dwunastej. ' + (mins >= 480 ? 'Telefon już odbieramy.' : 'Telefon odbieramy od 8:00.');
+    } else if (weekday && mins < 960) {
+      big.textContent = 'Obiady jadą';
+      note.textContent = 'Wydajemy od 12:00, biuro czynne do 16:00.';
+    } else {
+      big.textContent = p.weekday === 'Fri' || !weekday ? 'W poniedziałek' : 'Jutro, 12:00';
+      note.textContent = p.weekday === 'Fri' || !weekday ? 'kolejne obiady od 12:00. Telefon od 8:00.' : 'kolejne obiady. Telefon odbieramy od 8:00.';
+    }
+  };
+  tick(); setInterval(tick, 30000);
+
+  // Slow crossfade of the stage photograph; paused when the tab is hidden, off under reduced motion.
+  const imgs = [...document.querySelectorAll('.photo img')];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || imgs.length < 2) return;
+  let i = 0;
+  setInterval(() => {
+    if (document.hidden) return;
+    imgs[i].classList.remove('on');
+    i = (i + 1) % imgs.length;
+    imgs[i].classList.add('on');
+  }, 5600);
+})();
+</script>
+</body>
+</html>
